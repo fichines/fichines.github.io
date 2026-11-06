@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fichines · juegos hechos por amigos</title>
+<meta name="description" content="Juegos hechos por amigos, todos en un solo lugar. Entrá, elegí uno y jugá.">
+<meta property="og:title" content="Fichines">
+<meta property="og:description" content="Juegos hechos por amigos, todos en un solo lugar.">
+<meta property="og:image" content="https://fichines.github.io/img/sideways-rally.jpg">
+<meta property="og:url" content="https://fichines.github.io/">
+<meta name="theme-color" content="#0e1014">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23ffd23a'/%3E%3Ccircle cx='16' cy='16' r='10.5' fill='none' stroke='%2316130a' stroke-width='2'/%3E%3Crect x='14' y='9' width='4' height='14' rx='1' fill='%2316130a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --ink: #0e1014; --panel: #161920; --raise: #1d212a;
+  --line: rgba(236, 232, 220, 0.1); --line-2: rgba(236, 232, 220, 0.22);
+  --paper: #efece4; --paper-2: #bdbcb6; --mute: #8d95a1; --signal: #ffd23a; --signal-ink: #16130a; --bad: #ff7a6e;
+  --f-display: "Big Shoulders Display", "Barlow Semi Condensed", "Arial Narrow", sans-serif;
+  --f-ui: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --r: 10px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html:has(dialog[open]) { overflow: hidden; }
+body { margin: 0; min-height: 100dvh; display: flex; flex-direction: column; background: var(--ink); color: var(--paper); font: 500 17px/1.4 var(--f-ui); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+/* ---------- top ---------- */
+header { padding: 44px 0 30px; }
+.top { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 14px; }
+.coin { width: 46px; height: 46px; flex: none; }
+h1 { margin: 0; font: 900 clamp(48px, 9vw, 72px)/0.9 var(--f-display); letter-spacing: 0.01em; text-transform: uppercase; }
+.lead { margin: 12px 0 0; font-size: 19px; color: var(--paper-2); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 1px solid transparent; border-radius: 8px; background: var(--c, var(--signal)); color: var(--on, var(--signal-ink)); font: 800 20px/1 var(--f-display); letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: filter 0.15s, transform 0.15s; }
+.btn:hover { filter: brightness(1.1); }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; border-color: var(--line-2); color: var(--paper); }
+.btn.ghost:hover { background: var(--raise); filter: none; }
+.btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; filter: none; }
+
+/* ---------- catalogue ---------- */
+main { flex: 1; padding-bottom: 48px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 20px; margin: 0; padding: 0; list-style: none; }
+.card { display: flex; flex-direction: column; height: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.cover { position: relative; display: block; text-decoration: none; aspect-ratio: 16 / 9; overflow: hidden; background: var(--raise); }
+.cover img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+a.cover:hover img { transform: scale(1.025); }
+.cover.none { display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--c) 26%, var(--panel)) 0 26px, color-mix(in srgb, var(--c) 18%, var(--panel)) 26px 52px); }
+.cover.none span { max-width: 88%; max-height: 88%; overflow: hidden; font: 900 var(--fs, 60px)/0.95 var(--f-display); color: var(--c); text-align: center; text-transform: uppercase; overflow-wrap: anywhere; }
+.body { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 18px 20px 20px; }
+.card h2 { margin: 0; font: 800 32px/1 var(--f-display); text-transform: uppercase; overflow-wrap: anywhere; }
+.by { margin: 0; color: var(--mute); font-size: 16px; overflow-wrap: anywhere; }
+.desc { margin: 6px 0 0; color: var(--paper-2); overflow-wrap: anywhere; }
+.foot { margin-top: auto; padding-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px 14px; flex-wrap: wrap; }
+.acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.tags li { padding: 2px 8px; border: 1px solid var(--line-2); border-radius: 99px; color: var(--paper-2); font-size: 14px; font-weight: 600; }
+
+.slot { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; height: 100%; min-height: 240px; padding: 26px; border: 2px dashed var(--line-2); border-radius: var(--r); }
+.slot h2 { margin: 0; font: 800 32px/1 var(--f-display); text-transform: uppercase; color: var(--paper-2); }
+.slot p { margin: 0 0 10px; color: var(--mute); max-width: 34ch; }
+
+.msg { padding: 18px 20px; border: 1px solid var(--line-2); border-radius: var(--r); color: var(--paper-2); }
+footer { padding: 18px 0 26px; border-top: 1px solid var(--line); color: var(--mute); font-size: 15px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 6px 20px; flex-wrap: wrap; }
+
+/* ---------- upload dialog ---------- */
+dialog { width: min(920px, 100% - 32px); max-height: min(92dvh, 860px); padding: 0; background: var(--panel); color: var(--paper); border: 1px solid var(--line-2); border-radius: 12px; overscroll-behavior: contain; }
+dialog::backdrop { background: rgba(5, 6, 9, 0.72); }
+.dhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 22px 24px 4px; }
+.dhead h2 { margin: 0; font: 900 40px/1 var(--f-display); text-transform: uppercase; }
+.x { flex: none; width: 44px; height: 44px; margin: -6px -8px 0 0; background: none; border: 0; border-radius: 8px; font-size: 26px; line-height: 1; color: var(--paper-2); cursor: pointer; }
+.x:hover { background: var(--raise); }
+.dlead { margin: 0; padding: 0 24px; color: var(--paper-2); }
+.dgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 24px; padding: 18px 24px 24px; }
+.field { display: block; margin-bottom: 14px; border: 0; padding: 0; min-width: 0; }
+.field > span, .field > legend { display: block; margin-bottom: 5px; padding: 0; font-weight: 700; font-size: 15px; color: var(--paper-2); }
+.field small { font-weight: 500; color: var(--mute); }
+input[type=text], input[type=url], textarea { width: 100%; min-height: 44px; padding: 9px 12px; background: var(--ink); border: 1px solid var(--line-2); border-radius: 8px; }
+textarea { resize: vertical; min-height: 76px; }
+input::placeholder, textarea::placeholder { color: #666d78; }
+input:user-invalid { border-color: var(--bad); }
+.field > .err { display: none; margin: 4px 0 0; color: var(--bad); font-size: 15px; font-weight: 500; }
+.field > input:user-invalid ~ .err { display: block; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.opts label { position: relative; cursor: pointer; }
+.opts input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opts span { display: flex; align-items: center; min-height: 40px; padding: 0 13px; border: 1px solid var(--line-2); border-radius: 8px; color: var(--paper-2); font-weight: 600; }
+.opts input:checked + span { background: var(--signal); border-color: var(--signal); color: var(--signal-ink); }
+.opts input:focus-visible + span { outline: 2px solid var(--signal); outline-offset: 2px; }
+.colorf { display: flex; align-items: center; gap: 10px; }
+input[type=color] { width: 56px; height: 40px; padding: 2px; background: var(--ink); border: 1px solid var(--line-2); border-radius: 8px; cursor: pointer; }
+details { margin-bottom: 14px; color: var(--paper-2); }
+summary { min-height: 30px; font-weight: 700; color: var(--signal); cursor: pointer; }
+details ul { margin: 6px 0 0; padding-left: 20px; }
+details li { margin-bottom: 4px; }
+.side { min-width: 0; }
+.side .label { margin: 0 0 8px; font-weight: 700; font-size: 15px; color: var(--paper-2); }
+.side .card { height: auto; }
+.send { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.send p { margin: 0 0 10px; color: var(--paper-2); font-size: 16px; }
+.send .acts .btn { font-size: 18px; min-height: 44px; padding: 0 14px; flex: 1 1 auto; }
+.hint { margin: 10px 0 0; min-height: 1.4em; color: var(--mute); font-size: 15px; }
+
+@media (max-width: 720px) {
+  header { padding: 26px 0 22px; }
+  .top > .btn { width: 100%; }
+  .dgrid { grid-template-columns: minmax(0, 1fr); }
+  dialog { width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; border: 0; border-radius: 0; }
+  .card .acts, .card .acts .btn { flex: 1 1 auto; }
+  .foot { align-items: stretch; flex-direction: column-reverse; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="top">
+    <div>
+      <div class="logo">
+        <svg class="coin" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#ffd23a"/><circle cx="16" cy="16" r="10.5" fill="none" stroke="#16130a" stroke-width="2"/><rect x="14" y="9" width="4" height="14" rx="1" fill="#16130a"/></svg>
+        <h1>Fichines</h1>
+      </div>
+      <p class="lead">Juegos hechos por amigos, todos en un solo lugar.</p>
+    </div>
+    <a class="btn ghost" href="#subir">Subir un juego</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <ul class="grid" id="grid"></ul>
+  <p class="msg" id="fail" hidden>No se pudo cargar la lista de juegos. Revisá que <code>juegos.js</code> no tenga un error de tipeo.</p>
+  <noscript><p class="msg">Esta página necesita JavaScript para mostrar los juegos.</p></noscript>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Cada juego es de quien lo hizo.</span>
+    <a href="https://github.com/fichines/fichines.github.io#readme">Cómo funciona esta página ↗</a>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="dhead">
+    <h2 id="dTitle">Subir un juego</h2>
+    <button class="x" type="button" id="dClose" aria-label="Cerrar">×</button>
+  </div>
+  <p class="dlead">Cargá los datos y mandalos. Tu juego queda en la lista cuando lo agreguemos. Acá no se guardan archivos: el juego tiene que tener su propio link.</p>
+  <div class="dgrid">
+    <form id="form" novalidate>
+      <label class="field"><span>Nombre del juego</span>
+        <input type="text" name="nombre" required maxlength="60" autocomplete="off">
+        <span class="err">Falta el nombre.</span>
+      </label>
+      <label class="field"><span>Autor</span>
+        <input type="text" name="autor" required maxlength="60" autocomplete="off">
+        <span class="err">Falta quién lo hizo.</span>
+      </label>
+      <label class="field"><span>Descripción <small>una o dos oraciones</small></span>
+        <textarea name="descripcion" maxlength="240" rows="3"></textarea>
+      </label>
+      <fieldset class="field"><legend>¿Cómo se juega?</legend>
+        <div class="opts">
+          <label><input type="radio" name="tipo" value="jugar" checked><span>En el navegador</span></label>
+          <label><input type="radio" name="tipo" value="descargar"><span>Se descarga</span></label>
+        </div>
+      </fieldset>
+      <label class="field"><span id="linkLabel">Link para jugar</span>
+        <input type="url" name="link" required placeholder="https://" autocomplete="off" inputmode="url" spellcheck="false">
+        <span class="err">Tiene que ser un link completo, que empiece con https://</span>
+      </label>
+      <details>
+        <summary>¿Todavía no está online?</summary>
+        <ul>
+          <li><b>Se juega en el navegador:</b> GitHub Pages o itch.io lo publican gratis y te dan el link.</li>
+          <li><b>Es un ejecutable:</b> subilo a itch.io o a los Releases de GitHub y pegá acá el link de descarga.</li>
+        </ul>
+      </details>
+      <label class="field"><span>Imagen <small>opcional, un link a una captura apaisada</small></span>
+        <input type="url" name="imagen" placeholder="https://" autocomplete="off" inputmode="url" spellcheck="false">
+        <span class="err">Tiene que ser un link completo, que empiece con https://</span>
+      </label>
+      <fieldset class="field"><legend>¿Dónde anda?</legend>
+        <div class="opts" id="plats"></div>
+      </fieldset>
+      <label class="field"><span>Color del botón</span>
+        <span class="colorf"><input type="color" name="color" value="#5ec8e5"></span>
+      </label>
+    </form>
+    <div class="side">
+      <p class="label">Así va a quedar</p>
+      <div id="preview"></div>
+      <div class="send">
+        <p>Mandalo por donde te quede más cómodo:</p>
+        <div class="acts">
+          <a class="btn" id="sWa" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="btn ghost" type="button" id="sCopy">Copiar</button>
+          <a class="btn ghost" id="sGh" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <p class="hint" id="hint" role="status"></p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script src="juegos.js"></script>
+<script>
+const REPO = 'fichines/fichines.github.io';
+const PLATFORMS = ['Navegador', 'Celular', 'Windows', 'Mac', 'Linux'];
+const PALETTE = ['#ffd23a', '#5ec8e5', '#ff8a5c', '#8cd67a', '#c9a2ff', '#ff7fa8'];
+const $ = id => document.getElementById(id);
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function str(v) { return typeof v === 'string' ? v.trim() : ''; }
+// only web links and paths inside this site: entries come from other people
+function safeUrl(v) {
+  const u = str(v).replace(/[\u0000- ]/g, '');
+  if (!u) return '';
+  try { return /^https?:$/.test(new URL(u, 'https://x.invalid/').protocol) ? u : ''; } catch (e) { return ''; }
+}
+function hash(s) { let h = 0; for (const ch of s) h = (h * 31 + ch.codePointAt(0)) >>> 0; return h; }
+const rgbOf = hex => [1, 3, 5].map(i => parseInt(hex.substr(i, 2), 16));
+const lumOf = ([r, g, b]) => 0.299 * r + 0.587 * g + 0.114 * b;
+// a colour too dark to read on the panel is lifted towards white, keeping its hue
+function colorOf(g) {
+  if (!/^#[0-9a-f]{6}$/i.test(str(g.color))) return PALETTE[hash(str(g.nombre)) % PALETTE.length];
+  const c = rgbOf(str(g.color)), l = lumOf(c);
+  if (l >= 110) return str(g.color);
+  const t = (110 - l) / (255 - l);
+  return '#' + c.map(v => Math.round(v + (255 - v) * t).toString(16).padStart(2, '0')).join('');
+}
+function inkOn(hex) { return lumOf(rgbOf(hex)) > 140 ? '#16130a' : '#ffffff'; }
+function isExternal(u) { return /^https?:/i.test(u); }
+
+function coverOf(g, href) {
+  const c = el(href ? 'a' : 'div', 'cover');
+  if (href) { c.href = href; c.tabIndex = -1; c.setAttribute('aria-hidden', 'true'); }
+  const none = () => {
+    const name = str(g.nombre) || '?', t = el('span', '', name);
+    t.style.setProperty('--fs', (name.length > 40 ? 24 : name.length > 18 ? 38 : 60) + 'px');
+    c.classList.add('none'); c.replaceChildren(t);
+  };
+  const src = safeUrl(g.imagen);
+  if (!src) { none(); return c; }
+  const img = el('img');
+  img.alt = ''; img.decoding = 'async';
+  img.addEventListener('error', none);
+  img.src = src;
+  c.append(img);
+  return c;
+}
+
+// one game card; returns null if the entry has no name, author or link
+function card(g, preview) {
+  const play = safeUrl(g.jugar), down = safeUrl(g.descargar);
+  if (!preview && (!str(g.nombre) || !str(g.autor) || !(play || down))) return null;
+  const a = el('article', 'card'), col = colorOf(g);
+  a.style.setProperty('--c', col);
+  a.style.setProperty('--on', inkOn(col));
+  a.append(coverOf(g, preview ? '' : play || down));
+  const b = el('div', 'body');
+  b.append(el('h2', '', str(g.nombre) || (preview ? 'Tu juego' : '')));
+  b.append(el('p', 'by', 'de ' + (str(g.autor) || (preview ? '…' : ''))));
+  if (str(g.descripcion)) b.append(el('p', 'desc', str(g.descripcion)));
+  const f = el('div', 'foot');
+  const acts = el('div', 'acts');
+  const action = (label, href, ghost) => {
+    const x = el('a', 'btn' + (ghost ? ' ghost' : ''), label);
+    if (preview) { x.setAttribute('aria-disabled', 'true'); x.tabIndex = -1; return x; }
+    x.href = href;
+    if (isExternal(href)) x.rel = 'noopener';
+    return x;
+  };
+  if (play || preview && !down) acts.append(action('Jugar', play));
+  if (down) acts.append(action('Descargar', down, !!play));
+  f.append(acts);
+  const pl = Array.isArray(g.plataformas) ? g.plataformas.map(str).filter(Boolean) : [];
+  if (pl.length) { const t = el('ul', 'tags'); for (const p of pl) t.append(el('li', '', p)); f.append(t); }
+  b.append(f);
+  a.append(b);
+  return a;
+}
+
+function renderList() {
+  const grid = $('grid');
+  if (!Array.isArray(window.JUEGOS)) { $('fail').hidden = false; }
+  for (const g of window.JUEGOS || []) {
+    const c = g && typeof g === 'object' ? card(g) : null;
+    if (!c) { console.warn('Fichines: entrada incompleta en juegos.js', g); continue; }
+    const li = el('li'); li.append(c); grid.append(li);
+  }
+  const li = el('li'), s = el('div', 'slot');
+  s.append(el('h2', '', 'Tu juego acá'), el('p', '', '¿Hiciste un juego? Cargá los datos y lo sumamos a la lista.'));
+  const b = el('a', 'btn', 'Subir un juego'); b.href = '#subir';
+  s.append(b); li.append(s); grid.append(li);
+}
+
+/* ---------- upload form: builds the entry for juegos.js, nothing is stored here ---------- */
+const form = $('form'), dlg = $('dlg');
+function entry() {
+  const f = form.elements, e = {};
+  e.nombre = str(f.nombre.value);
+  e.autor = str(f.autor.value);
+  if (str(f.descripcion.value)) e.descripcion = str(f.descripcion.value);
+  if (str(f.imagen.value)) e.imagen = str(f.imagen.value);
+  e[f.tipo.value] = str(f.link.value);
+  const pl = [...form.querySelectorAll('[name=plat]:checked')].map(i => i.value);
+  if (pl.length) e.plataformas = pl;
+  e.color = f.color.value;
+  return e;
+}
+function formOk() {
+  const f = form.elements;
+  const web = v => /^https?:\/\/[^\s/]+\.[^\s]+/i.test(str(v));
+  return !!(str(f.nombre.value) && str(f.autor.value) && web(f.link.value) && (!str(f.imagen.value) || web(f.imagen.value)));
+}
+function snippet() { return '  ' + JSON.stringify(entry(), null, 2).replace(/\n/g, '\n  ') + ','; }
+function refresh() {
+  const e = entry(), ok = formOk();
+  $('preview').replaceChildren(card(e, true));
+  $('linkLabel').textContent = form.elements.tipo.value === 'jugar' ? 'Link para jugar' : 'Link de descarga';
+  const text = 'Quiero sumar mi juego a Fichines:\n\n' + snippet();
+  $('sWa').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+  $('sGh').href = 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent('Sumar juego: ' + e.nombre) + '&body=' + encodeURIComponent('```js\n' + snippet() + '\n```');
+  $('hint').textContent = ok ? '' : 'Completá nombre, autor y un link para poder mandarlo.';
+}
+function guard(ev) {
+  if (formOk()) return true;
+  ev.preventDefault();
+  form.reportValidity();
+  return false;
+}
+async function copy(ev) {
+  if (!guard(ev)) return;
+  try { await navigator.clipboard.writeText(snippet()); $('hint').textContent = 'Copiado. Ya lo podés mandar.'; }
+  catch (e) { $('hint').textContent = 'No se pudo copiar. Usá WhatsApp o GitHub.'; }
+}
+function setupForm() {
+  for (const p of PLATFORMS) {
+    const l = el('label'), i = el('input');
+    i.type = 'checkbox'; i.name = 'plat'; i.value = p; i.checked = p === 'Navegador';
+    l.append(i, el('span', '', p));
+    $('plats').append(l);
+  }
+  form.addEventListener('input', refresh);
+  form.addEventListener('submit', e => e.preventDefault());
+  // a download usually isn't a browser game: start from the other platform
+  for (const r of form.querySelectorAll('[name=tipo]')) r.addEventListener('change', () => {
+    const on = form.elements.tipo.value === 'jugar';
+    form.querySelector('[name=plat][value=Navegador]').checked = on;
+    form.querySelector('[name=plat][value=Windows]').checked = !on;
+    refresh();
+  });
+  $('sWa').addEventListener('click', guard);
+  $('sGh').addEventListener('click', guard);
+  $('sCopy').addEventListener('click', copy);
+  $('dClose').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { if (location.hash === '#subir') history.replaceState(null, '', location.pathname + location.search); });
+  refresh();
+}
+function route() { if (location.hash === '#subir' && !dlg.open) dlg.showModal(); }
+
+renderList();
+setupForm();
+addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
