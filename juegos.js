@@ -16,4 +16,13 @@ window.JUEGOS = [
     plataformas: ['Navegador', 'Celular'],
     color: '#ffd23a',
   },
+  {
+    nombre: 'El Imperio de la Muerte',
+    autor: 'Tomás Sosa',
+    descripcion: 'Terror en primera persona en las Catacumbas de París: encontrá la llave, abrí la reja y subí la escalera mientras cinco criaturas te cazan. Linterna con poca pila y ningún mapa.',
+    imagen: 'img/el-imperio-de-la-muerte.jpg',
+    jugar: 'juegos/el-imperio-de-la-muerte/',
+    plataformas: ['Navegador'],
+    color: '#a4532c',
+  },
 ];
