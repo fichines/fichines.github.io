@@ -4044,7 +4044,7 @@ function encDirector(dt){
   E.retry-=dt;if(E.retry>0)return;
   const thr=ENC_AT[DIFF][E.k]||.9;
   const regular=game.time>=D.grace&&game.time>=E.next&&E.prog>=thr&&!game.chasing;
-  const forced=E.n<E.need&&pn>=.78;
+  const forced=E.n<E.need&&(pn>=.78||E.pend);
   if(!regular&&!forced)return;
   E.retry=.5;
   const m=L.monsters.find(q=>q.type===E.plan[E.k]);
@@ -4053,8 +4053,8 @@ function encDirector(dt){
 }
 function encBlocked(){
   const E=game.enc;if(!E||E.n>=E.need)return false;
-  msg('Algo se mueve en el pasillo. Todavía no es momento de subir.',3.5);
-  if(!E.cur&&E.k<E.plan.length)E.next=0;
+  const f=E.need-E.n;msg(f>1?'Algo te acecha en la oscuridad. Todavía hay '+f+' criaturas entre vos y la superficie.':'Algo te acecha en la oscuridad. Una última criatura te cierra el paso.',4.5);
+  if(!E.cur&&E.k<E.plan.length){E.next=0;E.retry=0;E.pend=true;}
   return true;
 }
 
